@@ -65,16 +65,14 @@ function s.advance_summon_cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	tc:RemoveCounter(tp,0x892,level,REASON_COST)
 end
 function s.advance_summon_target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,s.advanced_code,0,TYPES_MONSTER,s.advanced_ATK,s.advanced_DEF,s.advanced_level,s.advanced_race,s.advanced_attr,POS_FACEUP)
+	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,s.advanced_code,0,TYPES_MONSTER,s.advanced_ATK,s.advanced_DEF,s.advanced_level,s.advanced_race,s.advanced_attr,POS_FACEUP)
 	 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.advance_summon_operation(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if not c then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,s.advanced_code,0,TYPES_MONSTER,s.advanced_ATK,s.advanced_DEF,s.advanced_level,s.advanced_race,s.advanced_attr,POS_FACEUP) then
+	if Duel.IsPlayerCanSpecialSummonMonster(tp,s.advanced_code,0,TYPES_MONSTER,s.advanced_ATK,s.advanced_DEF,s.advanced_level,s.advanced_race,s.advanced_attr,POS_FACEUP) then
         Duel.SendtoDeck(c,nil,-2,REASON_RULE)
 		Duel.ShuffleHand(tp)
 		local card=Duel.CreateToken(tp,s.advanced_code)

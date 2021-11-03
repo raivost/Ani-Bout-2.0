@@ -1,4 +1,4 @@
---[CEDO] Ani-Bout Duel 
+--[AB] Ani-Bout Duel 
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -330,6 +330,7 @@ function s.reduce_influence_condition(e,tp,eg,ep,ev,re,r,rp)
     return influce_counters > hero_rank*2
 end
 function s.reduce_influence_operation(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
     local tc=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst()
     if not tc then return end
     local hero_rank        = tc:GetRank()
@@ -405,7 +406,7 @@ function s.activate_spell_value(e,te,tp)
           and not (te:GetHandler():IsSetCard(0x891) or te:GetHandler():IsSetCard(0x892) or te:GetHandler():IsSetCard(0x893) 
           or te:GetHandler():IsSetCard(0x894) or te:GetHandler():IsSetCard(0x895) or te:GetHandler():IsSetCard(0x896)) 
     end
-  end
+end
 --(16) Activate Haste Spells During Both Turns
 function s.haste_target(e,c)
     return c:IsType(TYPE_QUICKPLAY)
