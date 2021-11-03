@@ -20,13 +20,13 @@ function s.play_condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.play_target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPES_MONSTER,1,0,1,RACE_WARRIOR,ATTRIBUTE_EARTH,POS_FACEUP) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,999900020,0,TYPES_MONSTER,1,0,1,RACE_WARRIOR,ATTRIBUTE_EARTH,POS_FACEUP) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.play_operation(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPES_MONSTER,1,0,1,RACE_WARRIOR,ATTRIBUTE_EARTH,POS_FACEUP) then
-		local card=Duel.CreateToken(tp,s.advanced_code)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,999900020,0,TYPES_MONSTER,1,0,1,RACE_WARRIOR,ATTRIBUTE_EARTH,POS_FACEUP) then
+		local card=Duel.CreateToken(tp,999900020)
 		Duel.SpecialSummon(card,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
