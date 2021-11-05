@@ -1,4 +1,4 @@
---[CEDO] Altering the Cycles
+--[AB] Altering the Cycles
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)

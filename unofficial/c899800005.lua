@@ -1,4 +1,4 @@
---[CEDO] Yatogami Tohka - Spacequakes Level 3
+--[AB] Yatogami Tohka - Spacequakes Level 3
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)

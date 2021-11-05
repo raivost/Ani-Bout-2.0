@@ -1,4 +1,4 @@
---[CEDO] Magical Girl Sayaka
+--[AB] Magical Girl Sayaka
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)

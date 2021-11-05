@@ -1,4 +1,4 @@
---[CEDO] Candidate's Training
+--[AB] Candidate's Training
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)

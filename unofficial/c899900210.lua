@@ -1,4 +1,4 @@
---[CEDO] God Of Ink
+--[AB] God Of Ink
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)

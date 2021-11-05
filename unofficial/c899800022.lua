@@ -1,4 +1,4 @@
---[CEDO] Kaname Madoka - Prayer of Salvation Level 3
+--[AB] Kaname Madoka - Prayer of Salvation Level 3
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)

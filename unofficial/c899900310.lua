@@ -1,4 +1,4 @@
---[CEDO] Purple Heart
+--[AB] Purple Heart
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)

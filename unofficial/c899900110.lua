@@ -1,4 +1,4 @@
---[CEDO] Bits Of Sorrow
+--[AB] Bits Of Sorrow
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)

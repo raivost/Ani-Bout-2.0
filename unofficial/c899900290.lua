@@ -1,4 +1,4 @@
---[CEDO] The Lucky Draw
+--[AB] The Lucky Draw
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)

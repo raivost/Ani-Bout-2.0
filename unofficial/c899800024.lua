@@ -1,4 +1,4 @@
---[CEDO] Kaname Madoka - Lamination of Cause & Effect Level 1
+--[AB] Kaname Madoka - Lamination of Cause & Effect Level 1
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)
