@@ -278,7 +278,7 @@ function s.avatar_level_filter(c)
 	return c:IsFaceup() and c:IsCode(999900000)
 end
 function s.avatar_level_value(e,c)
-    local tc=Duel.GetMatchingGroup(s.avatar_level_filter,c:GetControler(),LOCATION_FZONE,0,nil):GetFirst()
+    local tc=Duel.GetMatchingGroup(s.avatar_level_filter,e:GetHandler():GetControler(),LOCATION_FZONE,0,nil):GetFirst()
 	return tc:GetCounter(0x890)
 end
 --(5) Avatar Gain ATK
