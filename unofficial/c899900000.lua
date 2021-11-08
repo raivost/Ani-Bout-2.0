@@ -219,6 +219,20 @@ function s.initial_effect(c)
     e28:SetTarget(s.haste_target)
     e28:SetTargetRange(LOCATION_HAND,0)
     c:RegisterEffect(e28)
+    --(19) Exhaust Spells
+    local e29=Effect.CreateEffect(c)
+    e29:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+    e29:SetCode(EVENT_LEAVE_FIELD_P)
+    e29:SetProperty(EFFECT_FLAG_DELAY)
+    e29:SetOperation(s.exhaust_operation)
+    c:RegisterEffect(e29)
+    local e30=Effect.CreateEffect(c)
+    e30:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+    e30:SetRange(LOCATION_FZONE)
+    e30:SetTargetRange(LOCATION_SZONE,0)
+    e30:SetTarget(s.exhaust_target)
+    e30:SetLabelObject(e29)
+    c:RegisterEffect(e30)
 end
 
 s.heroes = {899800000,899800020,899800040}
@@ -292,7 +306,7 @@ function s.auto_activate_operation(e,tp,eg,ep,ev,re,r,rp)
             hero_list1=s.kirito
         end
         for i=1,#hero_list1 do
-            hero=Duel.CreateToken(1-tp,hero_list1[i])
+            hero=Duel.CreateToken(tp,hero_list1[i])
             heroes_group1:AddCard(hero)
         end
         Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
@@ -478,4 +492,11 @@ end
 --(18) Activate Haste Spells During Both Turns
 function s.haste_target(e,c)
     return c:IsType(TYPE_QUICKPLAY)
+end
+--(19) Exhaust Spells
+function s.exhaust_target(e,c)
+    return c:IsType(TYPE_SPELL) and c:IsSetCard(0x898)
+end
+function s.exhaust_operation(e,tp,eg,ep,ev,re,r,rp)
+    Duel.SendtoDeck(e:GetHandler(),nil,-2,REASON_RULE)
 end
