@@ -235,11 +235,12 @@ function s.initial_effect(c)
     c:RegisterEffect(e30)
 end
 
-s.heroes = {899800000,899800020,899800040}
+s.heroes = {899800000,899800020,899800040,899800060}
 
 s.tohka  = {899800001,899800004}
 s.madoka = {899800021,899800024}
 s.kirito = {899800041,899800044}
+s.shana  = {899800061,899800064}
 
  --(1) Auto-Activate From Hand Or Deck
 function s.auto_activate_condition(e,tp,eg,ep,ev,re,r,rp)
@@ -283,6 +284,8 @@ function s.auto_activate_operation(e,tp,eg,ep,ev,re,r,rp)
             hero_list2=s.madoka
         elseif tc2:IsCode(899800040) then
             hero_list2=s.kirito
+        elseif tc2:IsCode(899800060) then
+            hero_list2=s.shana
         end
         for i=1,#hero_list2 do
             hero=Duel.CreateToken(1-tp,hero_list2[i])
@@ -304,6 +307,8 @@ function s.auto_activate_operation(e,tp,eg,ep,ev,re,r,rp)
             hero_list1=s.madoka
         elseif tc1:IsCode(899800040) then
             hero_list1=s.kirito
+        elseif tc1:IsCode(899800060) then
+            hero_list1=s.shana
         end
         for i=1,#hero_list1 do
             hero=Duel.CreateToken(tp,hero_list1[i])

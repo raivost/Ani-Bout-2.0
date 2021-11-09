@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.reduce_level_target)
 	e1:SetValue(-2)
 	c:RegisterEffect(e1)
-    --Kickoff Effect
+    --Each Time A Monster From Hand Is Summoned
     if not s.global_check then
         s.global_check=true
         s[0]=0
@@ -36,7 +36,7 @@ end
 function s.reduce_level_target(e,c)
     return c:IsLevelAbove(2)
 end
---Kickoff Effect
+--Each Time A Monster From Hand Is Summoned
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
     local tc=eg:GetFirst()
     while tc do
