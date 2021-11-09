@@ -8,9 +8,9 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-    e1:SetCost(s.forge_cost)
-	e1:SetTarget(s.forge_target)
-	e1:SetOperation(s.forge_operation)
+    e1:SetCost(s.exhaust_cost)
+	e1:SetTarget(s.exhaust_target)
+	e1:SetOperation(s.exhaust_operation)
 	c:RegisterEffect(e1)
 end
 --(1) Exhaust 1 Card -> Forge 1 Card Same Type/Level
@@ -42,7 +42,7 @@ function s.essence_counter_cost(c,tp,card)
 	if card:IsSetCard(0x891) then remove_counters=1 end
 	return c:IsFaceup() and c:IsCode(899900000) and c:IsCanRemoveCounter(tp,0x892,remove_counters,REASON_COST)
 end
-function s.forge_cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.exhaust_cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local card=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.essence_counter_cost,tp,LOCATION_FZONE,0,1,nil,tp,card) end
 	local remove_counters=nil
@@ -50,11 +50,11 @@ function s.forge_cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetMatchingGroup(s.essence_counter_cost,tp,LOCATION_FZONE,0,nil,tp,card):GetFirst()
 	tc:RemoveCounter(tp,0x892,remove_counters,REASON_COST)
 end
-function s.forge_target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.exhaust_target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.exhaust_filter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,e,tp) end
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,0)
 end
-function s.forge_operation(e,tp,eg,ep,ev,re,r,rp)
+function s.exhaust_operation(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local tc=Duel.SelectMatchingCard(tp,s.exhaust_filter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,e,tp):GetFirst()
     local type  = tc:GetType()
