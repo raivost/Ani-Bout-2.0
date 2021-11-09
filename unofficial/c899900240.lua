@@ -32,8 +32,7 @@ function s.hero_filter(c)
 	return c:GetSequence()>=5
 end
 function s.play_target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    local tc=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst()
-    if not tc then return end
+    local tc=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst() if not tc then return end
     local hero_rank=tc:GetRank()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.forge_target_filter,tp,LOCATION_DECK,0,1,nil,hero_rank) end
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,0)

@@ -41,8 +41,7 @@ function s.draw_operation(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetOperatedGroup()
     local tc=g:GetFirst()
     if tc:IsLevel(1) or tc:IsSetCard(0x891) then return end
-    local tc1=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst()
-    if not tc1 then return end
+    local tc1=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst() if not tc1 then return end
     local hero_rank   = tc1:GetRank()
     local spell_level = nil
     if tc:GetType() == TYPE_SPELL then

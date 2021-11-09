@@ -37,8 +37,7 @@ function s.destroy_target_filter(c,hero_rank)
 	return c:IsFaceup() and c:IsLevelBelow(hero_rank-1)
 end
 function s.destroy_target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local tc=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst()
-    if not tc then return end
+	local tc=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst() if not tc then return end
 	local hero_rank=tc:GetRank()
 	if chk==0 then return Duel.IsExistingTarget(s.destroy_target_filter,tp,0,LOCATION_MZONE,1,nil,hero_rank) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

@@ -36,6 +36,7 @@ function s.frenzy_target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.frenzy_operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.increase_status_filter,tp,LOCATION_MZONE,0,nil)
+	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

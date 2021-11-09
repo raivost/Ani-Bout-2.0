@@ -44,8 +44,7 @@ function s.reduce_status_target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.exhaust_filter,tp,LOCATION_GRAVE,0,2,nil) end
 end
 function s.reduce_status_operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst()
-    if not tc then return end
+	local tc=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst() if not tc then return end
 	local hero_rank=tc:GetRank()
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local g1=Duel.SelectMatchingCard(tp,s.exhaust_filter,tp,LOCATION_GRAVE,0,2,hero_rank*2,nil)

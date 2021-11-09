@@ -71,168 +71,176 @@ function s.initial_effect(c)
     e9:SetTarget(s.hero_target)
     e9:SetLabelObject(e8)
     c:RegisterEffect(e9)
-    --(6) Hero's DEF = Total influence
-	local e10=Effect.CreateEffect(c)
-	e10:SetType(EFFECT_TYPE_SINGLE)
-	e10:SetCode(EFFECT_UPDATE_DEFENSE)
-	e10:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e10:SetRange(LOCATION_MZONE)
-	e10:SetValue(s.hero_total_influence_value)
-	c:RegisterEffect(e10)
-    local e11=Effect.CreateEffect(c)
-    e11:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-    e11:SetRange(LOCATION_FZONE)
-    e11:SetTargetRange(LOCATION_MZONE,0)
-    e11:SetTarget(s.hero_target)
-    e11:SetLabelObject(e10)
-    c:RegisterEffect(e11)
-    --(7) Hero's ATK = Current influence
+    --(6) Hero Cannot Be Changed To Defense
+    local e10=Effect.CreateEffect(c)
+    e10:SetType(EFFECT_TYPE_FIELD)
+    e10:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+    e10:SetRange(LOCATION_FZONE)
+    e10:SetTargetRange(LOCATION_MZONE,0)
+    e10:SetTarget(s.hero_target)
+    c:RegisterEffect(e10)
+    --(7) Hero's DEF = Total influence
+	local e11=Effect.CreateEffect(c)
+	e11:SetType(EFFECT_TYPE_SINGLE)
+	e11:SetCode(EFFECT_UPDATE_DEFENSE)
+	e11:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e11:SetRange(LOCATION_MZONE)
+	e11:SetValue(s.hero_total_influence_value)
+	c:RegisterEffect(e11)
     local e12=Effect.CreateEffect(c)
-	e12:SetType(EFFECT_TYPE_SINGLE)
-	e12:SetCode(EFFECT_UPDATE_ATTACK)
-	e12:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e12:SetRange(LOCATION_MZONE)
-	e12:SetValue(s.hero_current_influence_value)
-	c:RegisterEffect(e12)
+    e12:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+    e12:SetRange(LOCATION_FZONE)
+    e12:SetTargetRange(LOCATION_MZONE,0)
+    e12:SetTarget(s.hero_target)
+    e12:SetLabelObject(e11)
+    c:RegisterEffect(e12)
+    --(8) Hero's ATK = Current influence
     local e13=Effect.CreateEffect(c)
-    e13:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-    e13:SetRange(LOCATION_FZONE)
-    e13:SetTargetRange(LOCATION_MZONE,0)
-    e13:SetTarget(s.hero_target)
-    e13:SetLabelObject(e12)
-    c:RegisterEffect(e13)
-    --(8) Rank Up Hero And Add Influence + Essence Counters
+	e13:SetType(EFFECT_TYPE_SINGLE)
+	e13:SetCode(EFFECT_UPDATE_ATTACK)
+	e13:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e13:SetRange(LOCATION_MZONE)
+	e13:SetValue(s.hero_current_influence_value)
+	c:RegisterEffect(e13)
     local e14=Effect.CreateEffect(c)
-    e14:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    e14:SetTargetRange(1,0)
-    e14:SetCode(EVENT_PREDRAW)
+    e14:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
     e14:SetRange(LOCATION_FZONE)
-    e14:SetCountLimit(1)
-    e14:SetCondition(s.add_counter_condition)
-    e14:SetOperation(s.add_counter_operation)
+    e14:SetTargetRange(LOCATION_MZONE,0)
+    e14:SetTarget(s.hero_target)
+    e14:SetLabelObject(e13)
     c:RegisterEffect(e14)
-    --(9) Reduce Total Influence
+    --(9) Rank Up Hero And Add Influence + Essence Counters
     local e15=Effect.CreateEffect(c)
     e15:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
     e15:SetTargetRange(1,0)
-    e15:SetCode(EVENT_PHASE+PHASE_END)
+    e15:SetCode(EVENT_PREDRAW)
     e15:SetRange(LOCATION_FZONE)
     e15:SetCountLimit(1)
-    e15:SetCondition(s.reduce_influence_condition)
-    e15:SetOperation(s.reduce_influence_operation)
+    e15:SetCondition(s.add_counter_condition)
+    e15:SetOperation(s.add_counter_operation)
     c:RegisterEffect(e15)
-    --(10) Level Limit
+    --(10) Reduce Total Influence
     local e16=Effect.CreateEffect(c)
-    e16:SetType(EFFECT_TYPE_FIELD)
-    e16:SetRange(LOCATION_FZONE)
-    e16:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-    e16:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e16:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
     e16:SetTargetRange(1,0)
-    e16:SetTarget(s.level_limit_target)
+    e16:SetCode(EVENT_PHASE+PHASE_END)
+    e16:SetRange(LOCATION_FZONE)
+    e16:SetCountLimit(1)
+    e16:SetCondition(s.reduce_influence_condition)
+    e16:SetOperation(s.reduce_influence_operation)
     c:RegisterEffect(e16)
-    --(11) Cannot Normal Summon/Set Monsters
+    --(11) Level Limit
     local e17=Effect.CreateEffect(c)
     e17:SetType(EFFECT_TYPE_FIELD)
     e17:SetRange(LOCATION_FZONE)
-    e17:SetCode(EFFECT_CANNOT_SUMMON)
+    e17:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
     e17:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
     e17:SetTargetRange(1,0)
+    e17:SetTarget(s.level_limit_target)
     c:RegisterEffect(e17)
-    local e18=e17:Clone()
-    e18:SetCode(EFFECT_CANNOT_MSET)
+    --(12) Cannot Normal Summon/Set Monsters
+    local e18=Effect.CreateEffect(c)
+    e18:SetType(EFFECT_TYPE_FIELD)
+    e18:SetRange(LOCATION_FZONE)
+    e18:SetCode(EFFECT_CANNOT_SUMMON)
+    e18:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e18:SetTargetRange(1,0)
     c:RegisterEffect(e18)
-    --(12) Special Summon From Hand
-    local e19=Effect.CreateEffect(c)
-    e19:SetType(EFFECT_TYPE_FIELD)
-    e19:SetCode(EFFECT_SPSUMMON_PROC)
-    e19:SetProperty(EFFECT_FLAG_SPSUM_PARAM)
-    e19:SetTargetRange(POS_FACEUP,0)
-    e19:SetRange(LOCATION_HAND)
-    e19:SetCondition(s.special_summon_condition)
+    local e19=e18:Clone()
+    e19:SetCode(EFFECT_CANNOT_MSET)
     c:RegisterEffect(e19)
+    --(13) Special Summon From Hand
     local e20=Effect.CreateEffect(c)
-    e20:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-    e20:SetRange(LOCATION_FZONE)
-    e20:SetTargetRange(LOCATION_HAND,0)
-    e20:SetTarget(s.special_summon_target)
-    e20:SetLabelObject(e19)
+    e20:SetType(EFFECT_TYPE_FIELD)
+    e20:SetCode(EFFECT_SPSUMMON_PROC)
+    e20:SetProperty(EFFECT_FLAG_SPSUM_PARAM)
+    e20:SetTargetRange(POS_FACEUP,0)
+    e20:SetRange(LOCATION_HAND)
+    e20:SetCondition(s.special_summon_condition)
     c:RegisterEffect(e20)
-    --(13) Disarmed Cannot Attack
     local e21=Effect.CreateEffect(c)
-    e21:SetType(EFFECT_TYPE_FIELD)
-    e21:SetCode(EFFECT_CANNOT_ATTACK)
+    e21:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
     e21:SetRange(LOCATION_FZONE)
-    e21:SetTargetRange(LOCATION_MZONE,0)
-    e21:SetTarget(s.disarm_target)
+    e21:SetTargetRange(LOCATION_HAND,0)
+    e21:SetTarget(s.special_summon_target)
+    e21:SetLabelObject(e20)
     c:RegisterEffect(e21)
-    --(14) Anguish Reflect Damage To Controller
+    --(14) Disarmed Cannot Attack
     local e22=Effect.CreateEffect(c)
-	e22:SetDescription(aux.Stringid(id,0))
-	e22:SetCategory(CATEGORY_DESTROY)
-	e22:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e22:SetCode(EVENT_DAMAGE_STEP_END)
-	e22:SetTarget(s.anguish_effect_target)
-	e22:SetOperation(s.anguish_effect_operation)
-	c:RegisterEffect(e22)
+    e22:SetType(EFFECT_TYPE_FIELD)
+    e22:SetCode(EFFECT_CANNOT_ATTACK)
+    e22:SetRange(LOCATION_FZONE)
+    e22:SetTargetRange(LOCATION_MZONE,0)
+    e22:SetTarget(s.disarm_target)
+    c:RegisterEffect(e22)
+    --(15) Anguish Reflect Damage To Controller
     local e23=Effect.CreateEffect(c)
-    e23:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-    e23:SetRange(LOCATION_FZONE)
-    e23:SetTargetRange(LOCATION_MZONE,0)
-    e23:SetTarget(s.anguish_target)
-    e23:SetLabelObject(e22)
-    c:RegisterEffect(e23)
-    --(15) Cannot Set Spells
+	e23:SetDescription(aux.Stringid(id,0))
+	e23:SetCategory(CATEGORY_DESTROY)
+	e23:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e23:SetCode(EVENT_DAMAGE_STEP_END)
+	e23:SetTarget(s.anguish_effect_target)
+	e23:SetOperation(s.anguish_effect_operation)
+	c:RegisterEffect(e23)
     local e24=Effect.CreateEffect(c)
-    e24:SetType(EFFECT_TYPE_FIELD)
-    e24:SetCode(EFFECT_CANNOT_SSET)
-    e24:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e24:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
     e24:SetRange(LOCATION_FZONE)
-    e24:SetTargetRange(1,0)
-    e24:SetTarget(aux.TRUE)
+    e24:SetTargetRange(LOCATION_MZONE,0)
+    e24:SetTarget(s.anguish_target)
+    e24:SetLabelObject(e23)
     c:RegisterEffect(e24)
-    --(16) Activate Spell
+    --(16) Cannot Set Spells
     local e25=Effect.CreateEffect(c)
     e25:SetType(EFFECT_TYPE_FIELD)
-    e25:SetCode(EFFECT_CANNOT_ACTIVATE)
+    e25:SetCode(EFFECT_CANNOT_SSET)
     e25:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
     e25:SetRange(LOCATION_FZONE)
     e25:SetTargetRange(1,0)
-    e25:SetValue(s.activate_spell_value)
+    e25:SetTarget(aux.TRUE)
     c:RegisterEffect(e25)
-    --(17) Haste Spells
+    --(17) Activate Spell
     local e26=Effect.CreateEffect(c)
     e26:SetType(EFFECT_TYPE_FIELD)
-    e26:SetCode(EFFECT_ADD_TYPE)
+    e26:SetCode(EFFECT_CANNOT_ACTIVATE)
+    e26:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
     e26:SetRange(LOCATION_FZONE)
-    e26:SetTargetRange(LOCATION_HAND,0)
-    e26:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x897))
-    e26:SetValue(TYPE_QUICKPLAY)
+    e26:SetTargetRange(1,0)
+    e26:SetValue(s.activate_spell_value)
     c:RegisterEffect(e26)
-    local e27=e26:Clone()
-    e27:SetCode(EFFECT_BECOME_QUICK)
+    --(18) Haste Spells
+    local e27=Effect.CreateEffect(c)
+    e27:SetType(EFFECT_TYPE_FIELD)
+    e27:SetCode(EFFECT_ADD_TYPE)
+    e27:SetRange(LOCATION_FZONE)
+    e27:SetTargetRange(LOCATION_HAND,0)
+    e27:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x897))
+    e27:SetValue(TYPE_QUICKPLAY)
     c:RegisterEffect(e27)
-    --(18) Activate Haste Spells During Both Turns
-    local e28=Effect.CreateEffect(c)
-    e28:SetType(EFFECT_TYPE_FIELD)
-    e28:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
-    e28:SetRange(LOCATION_FZONE)
-    e28:SetTarget(s.haste_target)
-    e28:SetTargetRange(LOCATION_HAND,0)
+    local e28=e27:Clone()
+    e28:SetCode(EFFECT_BECOME_QUICK)
     c:RegisterEffect(e28)
-    --(19) Exhaust Spells
+    --(19) Activate Haste Spells During Both Turns
     local e29=Effect.CreateEffect(c)
-    e29:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-    e29:SetCode(EVENT_LEAVE_FIELD_P)
-    e29:SetProperty(EFFECT_FLAG_DELAY)
-    e29:SetOperation(s.exhaust_operation)
+    e29:SetType(EFFECT_TYPE_FIELD)
+    e29:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
+    e29:SetRange(LOCATION_FZONE)
+    e29:SetTarget(s.haste_target)
+    e29:SetTargetRange(LOCATION_HAND,0)
     c:RegisterEffect(e29)
+    --(20) Exhaust Spells
     local e30=Effect.CreateEffect(c)
-    e30:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-    e30:SetRange(LOCATION_FZONE)
-    e30:SetTargetRange(LOCATION_SZONE,0)
-    e30:SetTarget(s.exhaust_target)
-    e30:SetLabelObject(e29)
+    e30:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+    e30:SetCode(EVENT_LEAVE_FIELD_P)
+    e30:SetProperty(EFFECT_FLAG_DELAY)
+    e30:SetOperation(s.exhaust_operation)
     c:RegisterEffect(e30)
+    local e31=Effect.CreateEffect(c)
+    e31:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+    e31:SetRange(LOCATION_FZONE)
+    e31:SetTargetRange(LOCATION_SZONE,0)
+    e31:SetTarget(s.exhaust_target)
+    e31:SetLabelObject(e30)
+    c:RegisterEffect(e31)
 end
 
 s.heroes = {899800000,899800020,899800040,899800060}
@@ -352,7 +360,7 @@ end
 function s.hero_immune_value(e,te)
   return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:GetOwner()~=e:GetOwner() and not te:GetHandler():IsCode(id)
 end
---(6) Hero's DEF = Total influence
+--(7) Hero's DEF = Total influence
 function s.field_filter(c)
 	return c:IsFaceup() and c:IsCode(899900000)
 end
@@ -360,7 +368,7 @@ function s.hero_total_influence_value(e,c)
     local tc=Duel.GetMatchingGroup(s.field_filter,e:GetHandler():GetControler(),LOCATION_FZONE,0,nil):GetFirst()
 	return tc:GetCounter(0x891)
 end
---(7) Hero's ATK = Current influence
+--(8) Hero's ATK = Current influence
 function s.current_monsters_filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(1)
 end
@@ -370,7 +378,7 @@ function s.hero_current_influence_value(e,c)
     if #g>0 then total_level=g:GetSum(Card.GetLevel) end
 	return total_level
 end
---(8) Rank Up Hero And Add Influence + Essence Counters
+--(9) Rank Up Hero And Add Influence + Essence Counters
 function s.hero_filter(c)
   return c:GetSequence()>=5
 end
@@ -407,7 +415,7 @@ function s.add_counter_operation(e,tp,eg,ep,ev,re,r,rp)
         c:AddCounter(0x892,add_counters)
     end
 end
---(9) Reduce Total Influence
+--(10) Reduce Total Influence
 function s.reduce_influence_condition(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local tc=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst()
@@ -425,7 +433,7 @@ function s.reduce_influence_operation(e,tp,eg,ep,ev,re,r,rp)
     local remove_counters  =  influce_counters - hero_rank*2
     tc:RemoveCounter(tp,0x881,remove_counters,REASON_EFFECT)
 end
---(10) Level Limit
+--(11) Level Limit
 function s.level_limit_target(e,c,tp,sumtp,sumpos)
     local tc=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst()
     if not tc then return end
@@ -435,7 +443,7 @@ function s.level_limit_target(e,c,tp,sumtp,sumpos)
     local total_level=influence_counters-g:GetSum(Card.GetLevel)
     return c:GetLevel()>hero_rank or c:GetLevel()>total_level
 end
---(12) Special Summon From Hand
+--(13) Special Summon From Hand
 function s.special_summon_condition(e,c)
     if c==nil then return true end
     return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
@@ -443,11 +451,11 @@ end
 function s.special_summon_target(e,c)
     return c:IsType(TYPE_MONSTER)
 end
---(13) Disarmed Cannot Attack
+--(14) Disarmed Cannot Attack
 function s.disarm_target(e,c)
     return c:IsSetCard(0x886)
 end
---(14) Anguish Reflect Damage To Controller
+--(15) Anguish Reflect Damage To Controller
 function s.anguish_effect_target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local damage=Duel.GetBattleDamage(1-tp)
 	if chk==0 then return damage>0 end
@@ -462,7 +470,7 @@ end
 function s.anguish_target(e,c)
     return c:IsSetCard(0x884)
 end
---(16) Activate Spell
+--(17) Activate Spell
 function s.activate_spell_value(e,te,tp)
     local tc=Duel.GetMatchingGroup(s.hero_filter,tp,LOCATION_MZONE,0,nil):GetFirst()
     if not tc then return end
@@ -494,11 +502,11 @@ function s.activate_spell_value(e,te,tp)
           or te:GetHandler():IsSetCard(0x894) or te:GetHandler():IsSetCard(0x895) or te:GetHandler():IsSetCard(0x896)) 
     end
 end
---(18) Activate Haste Spells During Both Turns
+--(19) Activate Haste Spells During Both Turns
 function s.haste_target(e,c)
     return c:IsType(TYPE_QUICKPLAY)
 end
---(19) Exhaust Spells
+--(20) Exhaust Spells
 function s.exhaust_target(e,c)
     return c:IsType(TYPE_SPELL) and c:IsSetCard(0x898)
 end
