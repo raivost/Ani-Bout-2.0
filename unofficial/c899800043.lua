@@ -2,7 +2,7 @@
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)
-    --(1) Reduce Level In Hand By 1 - For 3 Monster
+    --(1) Reduce Level In Hand By 2 - For 2 Monster
     local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_HAND,0)
     e1:SetCondition(s.reduce_level_condition)
 	e1:SetTarget(s.reduce_level_target)
-	e1:SetValue(-1)
+	e1:SetValue(-2)
 	c:RegisterEffect(e1)
     --Kickoff Effect
     if not s.global_check then
@@ -29,9 +29,9 @@ function s.initial_effect(c)
         Duel.RegisterEffect(ge2,0)
     end
 end
---(1) Reduce Level In Hand By 1 - For 3 Monster
+--(1) Reduce Level In Hand By 2 - For 2 Monster
 function s.reduce_level_condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==e:GetHandler():GetControler() and s[e:GetHandler():GetControler()]<3
+	return Duel.GetTurnPlayer()==e:GetHandler():GetControler() and s[e:GetHandler():GetControler()]<2
 end
 function s.reduce_level_target(e,c)
     return c:IsLevelAbove(2)
