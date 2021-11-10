@@ -2,38 +2,23 @@
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)
-    --(1) Warcry -> Increase Status - ATK
+    --(1) Innate -> Forge Sandalphon Level 1
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_ATKCHANGE)
+	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
     e1:SetCountLimit(1)
-	e1:SetCondition(s.warcry_condition)
-	e1:SetTarget(s.warcry_target)
-	e1:SetOperation(s.warcry_operation)
+	e1:SetCondition(s.innate_condition)
+	e1:SetOperation(s.innate_operation)
 	c:RegisterEffect(e1)
 end
---(1) Warcry -> Increase Status - ATK
-function s.warcry_condition(e,tp,eg,ep,ev,re,r,rp)
+--(1) Innate -> Forge Sandalphon Level 1
+function s.innate_condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
-function s.increase_status_filter(c)
-	return c:IsFaceup() and c:IsLevelAbove(1)
-end
-function s.warcry_target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingTarget(s.increase_status_filter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,s.increase_status_filter,tp,LOCATION_MZONE,0,1,1,nil)
-end
-function s.warcry_operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
-    local e1=Effect.CreateEffect(e:GetHandler())
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetCode(EFFECT_UPDATE_ATTACK)
-    e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-    e1:SetValue(1)
-    tc:RegisterEffect(e1)
+function s.innate_operation(e,tp,eg,ep,ev,re,r,rp)
+    local card=Duel.CreateToken(tp,899700000)
+    Duel.SendtoHand(card,nil,REASON_EFFECT)
 end

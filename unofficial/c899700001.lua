@@ -1,11 +1,11 @@
---[AB] Twintail Passion
+--[AB] Sandalphon Level 2
 --Scripted by Raivost (Ravi)
 local s,id=GetID()
 function s.initial_effect(c)
-	--(1) Increase Status - ATK/DEF And Level
+	--(1) Increase Status - ATK/DEF
 	local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(id,0))
-    e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE+CATEGORY_LVCHANGE)
+    e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.increase_status_operation)
 	c:RegisterEffect(e1)
 end
---(1) Increase Status - ATK/DEF And Level
+--(1) Increase Status - ATK/DEF
 function s.essence_counter_cost(c,tp,card)
 	local remove_counters=nil
 	if card:IsSetCard(0x891) then remove_counters=1
@@ -50,10 +50,4 @@ function s.increase_status_operation(e,tp,eg,ep,ev,re,r,rp)
     local e2=e1:Clone()
     e2:SetCode(EFFECT_UPDATE_DEFENSE)
     tc:RegisterEffect(e2)
-    local e3=Effect.CreateEffect(e:GetHandler())
-    e3:SetType(EFFECT_TYPE_SINGLE)
-    e3:SetCode(EFFECT_UPDATE_LEVEL)
-    e3:SetValue(1)
-    e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-    tc:RegisterEffect(e3)
 end
