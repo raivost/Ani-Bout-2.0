@@ -37,5 +37,4 @@ function s.add_operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local sg=g:RandomSelect(tp,1):GetFirst()
     Duel.SendtoHand(sg,tp,REASON_EFFECT)
-    -- sg:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 end
